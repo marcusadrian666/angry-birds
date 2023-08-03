@@ -1,0 +1,46 @@
+import random
+
+class Bird:
+    def __init__(self):
+        self.icon = ">"
+
+    def display(self, slingshot):
+        return " " * slingshot + "(" + self.icon + ")" + " " * (10 - slingshot) + "@"
+
+class Pig:
+    def __init__(self, position):
+        self.position = position
+        self.icon = "🐷"
+
+    def display(self):
+        return " " * self.position + self.icon
+
+class AngryBirdsGame:
+    def __init__(self):
+        self.slingshot = random.randint(1, 9)
+        self.bird = Bird()
+        self.pigs = [Pig(random.randint(1, 9)) for _ in range(3)]
+        self.target = random.choice(self.pigs)
+
+    def display_game(self):
+        print(self.bird.display(self.slingshot))
+        print(" " * (self.slingshot + 1) + "\\" + " " * (9 - self.slingshot) + " \\")
+        print(" " * (self.slingshot + 1) + "   " + "\\" + "_" * (8 - self.slingshot) + "_\\")
+        print("=" * 10 + "  " + "=" * 10)
+        print("Pigs:")
+        for pig in self.pigs:
+            print(pig.display())
+        print("\nTarget: " + " " * self.target.position + "🎯")
+
+    def play(self):
+        self.display_game()
+        guess = int(input("\nGuess the position to launch the bird (1-9): "))
+        
+        if guess == self.target.position:
+            print("Congratulations! You hit the pig! 🎉")
+        else:
+            print("Oh no! You missed the pig. 😔")
+
+if __name__ == "__main__":
+    game = AngryBirdsGame()
+    game.play()
